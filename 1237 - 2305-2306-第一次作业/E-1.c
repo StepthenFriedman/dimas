@@ -1,14 +1,12 @@
 #include <stdio.h>
 
+//time complexity:O(y-x)
+
 int sevens(int x){
 	char str[5];
 	sprintf(str, "%d", x);
 	int i=0,r=0;
-	for (i=0;i<=5;i++){
-		if (str[i]=='7'){
-			r++;
-		}
-	}
+	for (i=0;i<=5;i++) if (str[i]=='7') r++;
 	return r;
 }
 
