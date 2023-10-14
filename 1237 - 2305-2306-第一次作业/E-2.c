@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//time complexity:O(1)
+//time complexity:O(log(y))
 
 int tenth(int i){
 	int res=1;

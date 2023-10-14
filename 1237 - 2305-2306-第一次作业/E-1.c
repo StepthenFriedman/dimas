@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//time complexity:O(y-x)
+//time complexity:O(ylog(y))
 
 int sevens(int x){
 	char str[5];
