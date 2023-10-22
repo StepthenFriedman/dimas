@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//单调队列优化,仍然TLE 
+//monotonic sequence optimized,however still TLE 
 
 int smaller(int x,int y){
 	if (y==-1) return 0;

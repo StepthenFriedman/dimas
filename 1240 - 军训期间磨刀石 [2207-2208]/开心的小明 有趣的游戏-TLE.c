@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//Œﬁ”≈ªØ,TLE
+//unoptimized,TLE
 
 int smaller(int x,int y){
 	if (y==-1) return 0;
