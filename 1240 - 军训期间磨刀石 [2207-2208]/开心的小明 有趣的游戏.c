@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-//time limit exceeded.
+//Œﬁ”≈ªØ,TLE
 
 int smaller(int x,int y){
 	if (y==-1) return 0;
@@ -11,7 +11,7 @@ int main(){
 	long int n,min1=-1,min2=-1;
 	int i,times=0,indx=0,indx2=0;
 	while (scanf("%ld",&n)!=EOF){
-		int cards[n],mid=0;
+		int cards[n];
 		long int sum=0;
 		for (i=0;i<n;i++) scanf("%d",&cards[i]);
 		
