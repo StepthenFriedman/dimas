@@ -1,7 +1,5 @@
 #include <stdio.h>
 
-//unoptimized,TLE
-
 int smaller(int x,int y){
 	if (y==-1) return 0;
 	if (x==-1) return 1;
