@@ -1,8 +1,8 @@
 #include <stdio.h>
 
 int main(){
-	int n,ipt,i;
-	float j=0.0,sqt=0.0;
+	int n,ipt,i,j;
+	float sqt=0.0;
 	while (scanf("%d",&n)!=EOF){
 		int sum[n];
 		for (i=0;i<n;i++){
@@ -10,19 +10,10 @@ int main(){
 			scanf("%d",&ipt);
 			if (ipt==1) continue;
 			sqt=sqrt(ipt);
-			for (j=2.0;j<sqt;j++) {
-				int intj=j;
-				if (ipt%intj==0) {
-					printf("%d ",intj);
-					sum[i]+=intj+(ipt/intj);
-				}
-			}
-			if (ipt==sqt*sqt) {
-				printf("sqrt ");
-				sum[i]+=sqt;
-			}
+			for (j=2;(float)j<sqt;j++) if (ipt%j==0) sum[i]+=j+(ipt/j);
+			if (ipt==(int)sqt*(int)sqt) sum[i]+=sqt;
 		}
-		for (i=0;i<n;i++) printf("sum:%d\n",sum[i]);
+		for (i=0;i<n;i++) printf("%d\n",sum[i]);
 	}
 	return 0;
 }
