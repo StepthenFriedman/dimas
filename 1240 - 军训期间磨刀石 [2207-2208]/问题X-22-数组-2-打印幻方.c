@@ -13,7 +13,7 @@ int main(){
 		for (j=0;j<n;j++) for (k=0;k<n;k++) map[j][k]=0;
 		
 		digit=(n>9?3:(n>3?2:1));
-		char pt[]={'%',digit+48,'d',' ','\0'};
+		char pf[]={'%',digit+48,'d',' ','\0'};
 		
 		k=((n+1)/2)-1;j=n-1;
 		
@@ -29,7 +29,7 @@ int main(){
 		
 		for (j=0;j<n;j++){
 			for (k=0;k<n;k++) {
-				printf(pt,map[j][k]);
+				printf(pf,map[j][k]);
 			}
 			printf("\n");
 		} 
