@@ -6,7 +6,7 @@ int main(){
 	float H,U,D,F,m;int day;
 	while (1) {
 		scanf("%f %f %f %f",&H,&U,&D,&F);
-		if (H+U+D+F<0.01) break;
+		if (H+U+D+F<0.0001) break;
 		float k=(F/100.)*U;
 		m=0;day=1;
 		again:
