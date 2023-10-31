@@ -1,15 +1,24 @@
 #include<stdio.h>
 
 int main(){
-	long long int n,i,min,min2,num,cost;
-	while (scanf("%lld",&n)!=EOF){
-		scanf("%lld %lld",&num,&cost);
-		min=((n/num)+1)*cost;
-		scanf("%lld %lld",&num,&cost);
-		min2=((n/num)+1)*cost;min=min<min2?min:min2;
-		scanf("%lld %lld",&num,&cost);
-		min2=((n/num)+1)*cost;min=min<min2?min:min2;
-		printf("%lld\n",min);
+	char cmd[5];int m,dir;double x,y,go;
+	while (scanf("%d",&m)!=EOF){
+		dir=0;x=y=0.;
+		for (int i=0;i<m;i++) {
+			scanf("%s",&cmd);
+			if (cmd[0]=='G'){
+				scanf("%lf",&go);
+				switch (dir%4){
+					case 0:y+=go;continue;
+					case 1:x+=go;continue;
+					case 2:y-=go;continue;
+					case 3:x-=go;continue;
+				}
+			}else{
+				dir++;
+			}
+		}
+		printf("%.3f %.3f\n",x,y);
 	}
 	
 	return 0;
