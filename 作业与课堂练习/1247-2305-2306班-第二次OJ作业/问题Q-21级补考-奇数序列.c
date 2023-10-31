@@ -8,7 +8,7 @@ int main(){
 			scanf("%d",&ni);
 			sum+=ni%2;
 		}
-		if ((n%2)*(sum%2)) printf("YES\n");
+		if ((n%2)&(sum%2)) printf("YES\n");
 		else printf("NO\n");
 	}
 	
