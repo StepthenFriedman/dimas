@@ -7,7 +7,7 @@ int main()
     	scanf("%s",&x);
     	if (x[0]=='0'&&x[1]=='\0') break;
 		for (i=0;x[i]!='\0';i++);
-		int a,b,c;
+		int c;
 		next1:i--;
 		if (i>7) {
 			
