@@ -14,14 +14,13 @@ int main(){
     			for (k=0;(k*v+j)<=V;k++){
     				if (k-queue[head]>s) head++;
     				x=dp[!b][k*v+j];
-    				while (dp[!b][queue[tail-1]*v+j]+w*(k-queue[tail-1])<x & tail>head) {
+    				while (dp[!b][queue[tail-1]*v+j]+w*(k-queue[tail-1])<x && tail>head) {
 						tail--;
 					}
     				queue[tail]=k;tail++;
 					dp[b][k*v+j]=dp[!b][queue[head]*v+j]+w*(k-queue[head]);
 				}
 			}
-			
 	    }
 	    printf("%d\n",dp[i%2][V]);
   	}
