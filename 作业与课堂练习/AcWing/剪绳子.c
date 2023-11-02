@@ -1,16 +1,13 @@
 int maxProductAfterCutting(int length){
-	int max=1,xi,i,j;
 	if (length==2) return 1;
-	else if (length==3) return 2;
-    for (i=1;i<length;i++){
-    	int p=1;xi=length/i;
-    	for (j=0;j<length%i;j++){
-    		p*=xi+1;
-		}
-		for (j=length%i;j<i;j++){
-			p*=xi;
-		}
-		max=max>p?max:p;
-	}
-	return max;
+	if (length==3) return 2;
+    int res=1,a=length/3,b=length%3;
+    if (b==1){
+        res=4; for (int i=1;i<a;i++) res*=3;
+    }
+    else if (b==2){
+        res=2; for (int i=0;i<a;i++) res*=3;
+    }
+    else for (int i=0;i<a;i++) res*=3;
+	return res;
 }
