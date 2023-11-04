@@ -38,7 +38,7 @@ int main(){
 			for (l=0;l<10;l++) if (a[l]&&~a[l]) for (m=0;m<10;m++) if (~a[m]){
 				p1=(a[i]*100+a[j]*10+a[k]);p2=(a[l]*10+a[m]);
 				r1=(p1*a[m]);r2=(p1*a[l]);r3=(p1*p2);
-				if (match(a,r1)&&match(a,r2)&&match(a,r3)&&(lp1<p1||lp2<p2)){
+				if (match(a,r1)&&match(a,r2)&&match(a,r3)&&(lp1<p1||lp2!=p2)){
 					printf("<%d>\n  %3d\nX  %2d\n-----\n%5d\n%4d\n-----\n%5d\n\n",item,p1,p2,r1,r2,r3);
 					item++;lp1=p1;lp2=p2;
 				}
