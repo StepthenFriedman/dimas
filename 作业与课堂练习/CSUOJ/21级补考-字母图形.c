@@ -1,14 +1,14 @@
 #include <stdio.h>
 
+int abs(int x){return x>0?x:-x;} 
+
 int main(){
-	int n,i,j,k;
+	int n,i,j;
 	while (scanf("%d",&n)!=EOF){
-		k=n;
 		for (i=0;i<n;i++){
-			for (j=1;j<k;j++) putchar(' ');
-			for (j=i;j>0;j--) putchar(97+j);
-			for (j=0;j<=i;j++) putchar(97+j);
-			putchar('\n');k--;
+			printf("%*s",n-i-1,"");
+			for (j=i;j>=-i;j--) putchar(97+abs(j));
+			putchar('\n');
 		}
 	}
 	return 0;

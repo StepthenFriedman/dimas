@@ -20,6 +20,8 @@
 
  可以发issue
 
+ 可以发pull request
+
  还可以加入我们
 
  只要告知你的github ID

@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(){
-	long long int K,i,j,x,y,res;
+	long long int K,i,x,res;
 	while (scanf("%lld",&K)!=EOF){
 		for (i=0;i<K;i++){
 			scanf("%lld",&x);
