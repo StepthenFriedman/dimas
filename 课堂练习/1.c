@@ -1,7 +1,7 @@
 #include <stdio.h>
 int main(){
-	int ipt;
-	while (scanf("%d",&ipt)!=EOF){
+	int n;
+	while (scanf("%d",&n)!=EOF){
 		
 	}
 	return 0;
