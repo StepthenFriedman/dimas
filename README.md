@@ -12,7 +12,7 @@
 
  如有需要可以随意学习使用
 
- 建议稍作修改防重
+ 建议稍作修改 [防重](https://github.com/StepthenFriedman/dimas/wiki/%E4%BF%AE%E6%94%B9%E4%BB%A3%E7%A0%81%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A7%BF%E5%8A%BF)
 
 ## 如果有账号的话,那个,右上角有个小小的星星
 
