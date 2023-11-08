@@ -17,13 +17,11 @@ int main(){
 	i=2;j=0;k=1;
 	while (1){
 		
-		if (b[j]<a[i]||i>=n){
-			b[k]=b[j];j++;
-		}else{b[k]=a[i];i++;}
+		if (b[j]<a[i]||i>=n) b[k]=b[j++];
+		else b[k]=a[i++];
 		
-		if (b[j]<a[i]||i>=n){
-			b[k]+=b[j];j++;
-		}else{b[k]+=a[i];i++;}
+		if (b[j]<a[i]||i>=n) b[k]+=b[j++];
+		else b[k]+=a[i++];
 		
 		sum+=b[k];
 		k++;
