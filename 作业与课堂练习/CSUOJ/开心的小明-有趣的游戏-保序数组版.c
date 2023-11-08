@@ -5,18 +5,12 @@ int cmp(const void *a,const void *b){
 	return *(int*)a-*(int*)b;
 }
 
-int smaller(int a,int b){
-	if (a==-1) return 0;
-	else if (b==-1) return 1;
-	else return (a<b);
-}
-
 int main(){
 	int n,i,j,k,sum;
 	scanf("%d",&n);
 	int a[n],b[n];
 	for(i=0;i<n;i++){
-		scanf("%d",&a[i]);b[i]=-1;
+		scanf("%d",&a[i]);
 	}
 	qsort(a,n,sizeof(int),cmp);
 	sum=b[0]=a[0]+a[1];
@@ -26,6 +20,7 @@ int main(){
 		if (b[j]<a[i]||i>=n){
 			b[k]=b[j];j++;
 		}else{b[k]=a[i];i++;}
+		
 		if (b[j]<a[i]||i>=n){
 			b[k]+=b[j];j++;
 		}else{b[k]+=a[i];i++;}
@@ -38,4 +33,6 @@ int main(){
 	
 	printf("%d\n",sum);
 	return 0;
+	
+	
 }
