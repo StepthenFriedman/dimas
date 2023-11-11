@@ -1,11 +1,11 @@
 #include <stdio.h>
 
 int main(){
-	long int n;
+	int n;
 	int i,times=0;
-	while (scanf("%ld",&n)!=EOF){
+	while (scanf("%d",&n)!=EOF){
 		int cards[n],mid=0;
-		long int sum=0;
+		long long int sum=0;
 		for (times=0;times<n;times++) {
 			scanf("%d",&mid);
 			i=times;
@@ -24,7 +24,7 @@ int main(){
 			}
 			cards[i]=mid;
 		}
-		printf("%d\n",sum);
+		printf("%lld\n",sum);
 	}
 	return 0;
 }
