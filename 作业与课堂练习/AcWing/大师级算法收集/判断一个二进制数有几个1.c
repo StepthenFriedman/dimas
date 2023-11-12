@@ -8,6 +8,6 @@ int main()
 		num = num&(num - 1);
 		count++;
 	}
-	printf("num中1的个数：%d\n", count);
+	printf("%d\n", count);
 	return 0;
 }
