@@ -11,7 +11,7 @@ int main(){
 	int a[n],*i=&a[0],*j=&a[0],*k=&a[1],*end=&a[n-1];
 	for(;i<=end;i++) scanf("%d",i);
 	qsort(a,n,sizeof(int),cmp);
-	sum=a[0]=a[0]+a[1];i=&a[2];
+	sum=*j=*j+*k;i=&a[2];
 	while (i<=end||j<k-1){
 		*k=(*j<*i||i>end)?*(j++):*(i++);
 		sum+=*(k++)+=(*j<*i||i>end)?*(j++):*(i++);
