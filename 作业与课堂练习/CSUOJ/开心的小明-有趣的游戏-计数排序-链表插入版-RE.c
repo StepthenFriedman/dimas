@@ -7,11 +7,10 @@ typedef struct ListNode{
 } LN;
 
 int main(){
-	int n,sum=0,add,times,max,min,ipt,temp;
-	register int i;
+	int n,sum=0,add,times,max,min,ipt,i;
 	LN* next;
 	scanf("%d",&n);
-	int* sort=calloc(1000000,sizeof(int));
+	int* sort=calloc(1001,sizeof(int));
 	scanf("%d",&ipt);max=min=ipt;sort[ipt]++;
 	for(i=1;i<n;i++){
 		scanf("%d",&ipt);
@@ -20,8 +19,8 @@ int main(){
 		sort[ipt]++;
 	}
 	LN* node=(LN*)malloc(sizeof(LN)),*head=node,*search=node,*del=node,*tmp;
-	node->value=min;
-    for (i=min+1;i<=max;i++){
+	node->value=min;sort[min]--;
+    for (i=min;i<=max;i++){
 		while (sort[i]) {
 			LN* a=(LN*)malloc(sizeof(LN));
 			node->next=a;
@@ -30,27 +29,23 @@ int main(){
 			sort[i]--;
 		}
 	}
-	search=search->next->next;
+	free(sort);
 	node->next=NULL;
 	for (times=0;times<n-1;times++){
-		temp=head->value;
+		add=head->value;
 		head=head->next;
-		temp+=head->value;
+		add+=head->value;
 		head=head->next;
-		sum+=temp;
-		while (search->next!=NULL){
-			if (((search->next)->value)>=temp) break;
-			search=search->next;
-		}
+		sum+=add;
+		while (search->next!=NULL&&search->next->value<add) search=search->next;
 		LN* a=(LN*)malloc(sizeof(LN));
-		(a->value)=temp;
+		(a->value)=add;
 		(a->next)=(search->next);
-		(search->next)=del=a;
+		(search->next)=a;
 	}
 	while (del!=NULL){
 		tmp=del;del=del->next;free(tmp);
 	}
-	free(sort);
 	printf("%d\n",sum);
 	return 0;
 }
