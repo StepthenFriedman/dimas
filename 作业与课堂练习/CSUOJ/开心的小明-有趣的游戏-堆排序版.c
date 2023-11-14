@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
  
 void heapify(int* arr, int start, int end) {
     int smallest=start,left = 2*start+1,right=left+1;
@@ -31,6 +30,5 @@ int main() {
     for (i=0;i<n;i++) scanf("%d",&a[i]);
     for (i=n/2-1;i>=0;i--) heapify(a,i,n);
     printf("%d\n", mergePiles(a, n));
- 
     return 0;
 }
