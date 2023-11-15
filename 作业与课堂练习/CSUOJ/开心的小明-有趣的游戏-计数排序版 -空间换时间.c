@@ -5,7 +5,7 @@ int main(){
 	int n,sum=0,add,times,max,min,ipt,*pj;
 	register int i;
 	scanf("%d",&n);
-	int* sort=calloc(1000000,sizeof(int));
+	int* sort=calloc(100000,sizeof(int));
 	scanf("%d",&ipt);max=min=ipt;sort[ipt]++;
 	for(i=1;i<n;i++){
 		scanf("%d",&ipt);
