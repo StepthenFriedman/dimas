@@ -1,7 +1,4 @@
 #include<stdio.h>
-int cmp(const void *a,const void *b){
-	return *(float*)a-*(float*)b;
-}
 
 int main()
 {
@@ -31,7 +28,7 @@ int main()
 		}
 		printf("WORST\n");
 		for (j=0;j<n;j++) {
-			if (score[indx[j]]==worst)printf("%d %d %d %d %d\n",num[indx[j]],score[indx[j]],math[indx[j]],eng[indx[j]],clang[indx[j]]);
+			if (score[indx[j]]==worst) printf("%d %d %d %d %d\n",num[indx[j]],score[indx[j]],math[indx[j]],eng[indx[j]],clang[indx[j]]);
 		}
 		putchar('\n');
 	}

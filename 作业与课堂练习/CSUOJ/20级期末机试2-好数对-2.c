@@ -3,7 +3,7 @@ int fin2[2001]={0,0,0,0,0,1,1,1,1,1,1,3,3,3,4,4,4,5,5,6,6,6,6,8,8,8,8,9,9,12,12,
 int main(){
     int n;
     while (~scanf("%d",&n)){
-        printf("%d\n",fin2[n-!!(n)]);
+        printf("%d\n",fin2[n-1]);
     }
     return 0;
 }
