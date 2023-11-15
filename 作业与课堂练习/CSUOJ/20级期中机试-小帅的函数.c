@@ -2,10 +2,6 @@
 
 int main(){
     int x;
-    while (~scanf("%d",&x)){
-        if (x<1) printf("%d\n",x*x);
-        else if (x<10) printf("%d\n",2*x-1);
-        else printf("%d\n",3*x-12);
-    }
-    
+    while (~scanf("%d",&x))printf("%d\n",(x<1)?(x*x):(x<10)?(2*x-1):(3*x-12));
+    return 0;
 }
