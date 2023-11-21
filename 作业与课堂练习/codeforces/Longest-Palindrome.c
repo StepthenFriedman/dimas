@@ -6,16 +6,30 @@ int isPal(char* a, char* b, int n){
 }
 
 int main(){
-    int t,n,i,j,k;
+    int n,m,i,j,max,sp;
     char ipt[200][60];
-    int palStart[200],palEnd[200];
-    while (~scanf("%d%d",&t,&n)){
-        for (i=0;i<t;i++) scanf("%s",&ipt[i]); k=0;
-        for (i=0;i<t;i++) for (j=i;j<t;j++) if (isPal(ipt[i],ipt[j],n)) {
-            palStart[k]=i;palEnd[k++]=j;
-        for (i=0;i<k;i++) printf("[ %d - %d ]\n",palStart[i],palEnd[i]);
+    char res[10000];
+    char selfPal[60];
+    while (sp=max=0,~scanf("%d%d",&n,&m)){
+        for (i=j=0;i<n;i++) scanf("%s",&ipt[i]);
+        for (char *p=&ipt[0];p<&ipt[n];p+=60){
+            for (char *p2=p;p2<&ipt[n];p2+=60){
+                if (isPal(p,p2,m)){
+                    if (p!=p2) {
+                        for (i=0;i<m;i++) res[j++]=p[i];max++;
+                    }
+                    else {
+                        sp=1;for (i=0;i<=m;i++) selfPal[i]=p[i];
+                    }
+                }
+            }
+        }
+        res[j]='\0';
+        printf("%d\n",max*m*2+sp*m);
+        printf("%s",res);
+        if (sp) printf("%s",selfPal);
+        for (i=j-1;i>-1;i--) putchar(res[i]);
+        putchar('\n');
     }
-    //printf("%d",isPal("tab","tab",3));
-
     return 0;
 }
