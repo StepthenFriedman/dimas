@@ -9,7 +9,7 @@ int main(){
         scanf("%lld",&n);
         x=(long long int)((sqrt((double)(1+4*n))-1.)/2.);
         indx=x*2+1;
-        if (n>=x*(x+2)) indx++;
+        if (n>=(x+1)*(x+1)) indx++;
         j=1;
         printf("%lld\n0 ",indx);
         while (j<=(n/2)) {
