@@ -13,7 +13,7 @@ int main() {
     long long ans = 0;
     set<long long> s = {0};
     for(begin=0;begin<n;begin++) {
-        while(end < n && !s.count(prefix[end + 1])) s.insert(prefix[++end]);
+        while(end < n && !s.count(prefix[end+1])) s.insert(prefix[++end]);
         ans += end - begin;
         s.erase(prefix[begin]);
     }

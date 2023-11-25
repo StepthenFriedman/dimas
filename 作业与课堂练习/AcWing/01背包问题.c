@@ -2,7 +2,7 @@
 #define max(x,y) x>y?x:y
 
 int main(){
-    long int t,m;//t:×ÜÈÝÁ¿ 
+    long int t,m;
 	int dp[2000]={0};
     while(~scanf("%d %d", &m, &t)){
     	int c,v;
