@@ -2,9 +2,9 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-char ipt[1000000]={0},temp[10]={0};
+char temp[10]={0};
 int k;
-int arr[4][100000]={0},indx[4]={0,0,0,0};
+int **arr,*indx;
 
 int isPrime(int a) {
     int sqt=sqrt((double)a);
@@ -64,11 +64,13 @@ int judge(int x){
 }
 int main(){
     int i,j,m,t,max,x;
-    char *p=&ipt[0],*end;
+    char *p,*end;
+    p=(char*)malloc(100001*sizeof(char));
     while(~scanf("%s%d", p, &m)){
-        indx[0]=indx[1]=indx[2]=indx[3]=0;
         for (end=p;*end!='\0';end++);
-        for (i=0;i<=(end-p)*2;arr[0][i]=arr[1][i]=arr[2][i]=arr[3][i]=0,i++);
+        indx=(int*)calloc(4,sizeof(int));
+        arr= (int**)malloc(sizeof(int*)*4);
+        for (i=0;i<4;i++) arr[i]=(int*)calloc(10000,sizeof(int));
         while (p<end){
             snprintf(temp,m+1,"%s",p);
             sscanf(temp,"%d",&x);
@@ -81,5 +83,9 @@ int main(){
         k=getk(max);
         print();
 	}
+    //free(indx);
+    //for (i=0;i<4;i++) free(arr[i]);
+    //free(arr);
+    //free(p);
     return 0;
 }
