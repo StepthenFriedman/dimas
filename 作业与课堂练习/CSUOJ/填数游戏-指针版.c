@@ -64,12 +64,13 @@ int judge(int x){
 }
 int main(){
     int i,j,m,t,max,x;
-    char *p,*end;
-    p=(char*)malloc(100001*sizeof(char));
+    char *end,*p,*f;
+    f=p=(char*)malloc(100001*sizeof(char));
+    arr=(int**)malloc(sizeof(int*)*4);
     while(~scanf("%s%d", p, &m)){
+        if (m==0) break;
         for (end=p;*end!='\0';end++);
         indx=(int*)calloc(4,sizeof(int));
-        arr= (int**)malloc(sizeof(int*)*4);
         for (i=0;i<4;i++) arr[i]=(int*)calloc(10000,sizeof(int));
         while (p<end){
             snprintf(temp,m+1,"%s",p);
@@ -82,10 +83,10 @@ int main(){
         for (i=1;i<4;i++) if (max<indx[i]) max=indx[i];
         k=getk(max);
         print();
+        for (i=0;i<4;i++) free(arr[i]);
+        free(indx);
 	}
-    //free(indx);
-    //for (i=0;i<4;i++) free(arr[i]);
-    //free(arr);
-    //free(p);
+    free(arr);
+    free(f);
     return 0;
 }
