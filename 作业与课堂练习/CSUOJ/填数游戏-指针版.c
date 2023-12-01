@@ -1,6 +1,8 @@
 #include <math.h>
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
+
+//detect memory leak with valgrind.
 
 char temp[10]={0};
 int k;
