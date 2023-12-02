@@ -4,54 +4,37 @@ int prime[]={2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61,
 int main(){
 	int i,j,n,map[600][600],wid,hei,tempx,tempy,templen;
 	while (scanf("%d",&n)!=EOF){
-        for (i=0;i<600;i++){
-            memset(map[i],0, 600*4);
-        }
-        if (n%2){
-            wid=prime[n-1]+1;
-            hei=prime[n-2]+1;
-        }else{
-            hei=prime[n-1]+1;
-            wid=prime[n-2]+1;
-        }
+        for (i=0;i<600;i++) memset(map[i],0, 600*4);
+        if (n%2) wid=prime[n-1]+1,hei=prime[n-2]+1;
+        else hei=prime[n-1]+1,wid=prime[n-2]+1;
         if (n==1) {printf("11\n"); goto end;}
         else if (n==2) {printf("02\n02\n02\n11\n"); goto end;}
 
-        if (n%4==1) {tempx=wid-1;tempy=hei-1;}
-        else if (n%4==2) {tempx=wid-1;tempy=0;}
-        else if (n%4==3) {tempx=0;tempy=0;}
-        else {tempx=0;tempy=hei-1;}
+        if (n%4==1) tempx=wid-1,tempy=hei-1;
+        else if (n%4==2) tempx=wid-1,tempy=0;
+        else if (n%4==3) tempx=tempy=0;
+        else tempx=0,tempy=hei-1;
 
         for (i=n;i>0;i--){
             templen=prime[i-1];
             if (i%4==1){
-                for (j=0;j<templen;j++){
-                    map[tempy][tempx-j]=1;
-                }
+                for (j=0;j<templen;j++) map[tempy][tempx-j]=1;
                 tempx-=templen;
             }else if (i%4==0){
-                for (j=0;j<templen;j++){
-                    map[tempy-j][tempx]=2;
-                }
+                for (j=0;j<templen;j++) map[tempy-j][tempx]=2;
                 tempy-=templen;
             }else if (i%4==3){
-                for (j=0;j<templen;j++){
-                    map[tempy][tempx+j]=1;
-                }
+                for (j=0;j<templen;j++) map[tempy][tempx+j]=1;
                 tempx+=templen;
             }
             else if (i%4==2){
-                for (j=0;j<templen;j++){
-                    map[tempy+j][tempx]=2;
-                }
+                for (j=0;j<templen;j++) map[tempy+j][tempx]=2;
                 tempy+=templen;
             }
         }
         
         for (i=0;i<hei;i++){
-            for (j=0;j<wid;j++){
-                printf("%d",map[i][j]);
-            }
+            for (j=0;j<wid;j++) printf("%d",map[i][j]);
             printf("\n");
         }
         end:printf("\n");
