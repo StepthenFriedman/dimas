@@ -1,0 +1,2 @@
+g++ -fsanitize=address a.c
+valgrind ./a.out
