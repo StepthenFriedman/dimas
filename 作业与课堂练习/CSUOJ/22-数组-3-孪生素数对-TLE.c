@@ -1,38 +1,21 @@
 #include <stdio.h>
 #include <math.h>
-#define LEN 5000000
 
-int pair_prime[LEN+5]={0};
-int amount[LEN+5]={0};
+int prime[348520]={3};
 
-int Judge(int n)
-{
-	int i;
-	if(n<2) return 0;
-	else if(n==2) return 1;
-	else{
-		for(i=2;i<=(int)sqrt(n);i++) if(n%i==0) return 0;
-		return 1;
+int main(){
+    int T,L,R,i,j,k,t,pr=1,sqt;
+    for (i=3;prime[pr-1]<5000011;i+=2){
+		sqt=(int)sqrt((double)i)+1;
+		for (j=2;j<=sqt;j++) if (!(i%j)) goto next;
+		prime[pr++]=i;
+		next:i=i;
 	}
-}
-
-int main()
-{
-	int i;
-	pair_prime[1]=pair_prime[2]=0;
-	pair_prime[3]=pair_prime[5]=1;
-	for(i=6;i<=LEN;i+=6) if(Judge(i-1)&&Judge(i+1)) pair_prime[i-1]=pair_prime[i+1]=1;
-	int cnt=0;
-	for(i=5;i<=LEN;i++){
-		if(pair_prime[i]&&pair_prime[i-2]) amount[i]=++cnt;
-		else amount[i]=amount[i-1];
-	}
-	int K,a,b;
-	scanf("%d",&K);
-	while(K--){
-		scanf("%d%d",&a,&b);
-		if(Judge(a-1)&&Judge(a+1)) printf("%d\n",amount[b]-amount[a]-1);
-		else printf("%d\n",amount[b]-amount[a]);
-	}
-	return 0;
+    scanf("%d",&T);
+    for (t=0;t<T;t++) {
+        scanf("%d%d",&L,&R);
+        for (k=i=0;prime[i]<L;i++);
+        for (j=i+1;prime[j]<=R;j++) k+=(prime[j]-prime[j-1]==2);
+        printf("%d\n",k);
+    }
 }
