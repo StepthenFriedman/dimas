@@ -1,23 +1,48 @@
 #include<stdio.h>
-int arr(int x){
-	int i,sum=0;
-	for(i=2;i*i<=x;i++){
-		if(x%i==0){
-			sum++;
-			break;
+int main()
+{
+	int n,m,i,j,k;
+	while(scanf("%d %d",&n,&m)!=EOF)
+	{
+		if(!(m+n))break;
+		int num=0;
+		char arr[800][800];
+		int x[800],y[800],h[800][800]={0};
+		for(i=0;i<n;i++)scanf("%s",arr[i]);
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<m;j++)
+			{
+				if(arr[i][j]=='0')
+				{
+					x[num]=i;
+					y[num]=j;
+					num++;
+			    }
+			}
 		}
-	}
-	if(sum==0)return 1;
-	else return 0;
-}
-int main(){
-	long long int i,a,b,j,k;
-	while(scanf("%lld",&k)!=EOF){
-		for(i=0;i<k;i++){
-			long long int sum=0;
-			scanf("%lld %lld",&a,&b);
-			for(j=a;j<=b;j++) if(arr(j)&&arr(j+2)&&j+2<=b&&j!=1)sum++;
-			printf("%lld\n",sum);
+		for(i=0;i<n;i++)
+		{
+			for(j=0;j<m;j++)
+			{
+				if(arr[i][j]=='0')
+				{
+					printf("0 ");
+					continue;
+				}
+				h[i][j]=m+n;
+				for(k=0;k<num;k++)
+				{
+					int a=((x[k]-i)>0?(x[k]-i):(i-x[k]))+((y[k]-j)>0?(y[k]-j):(j-y[k]));
+					if(a<h[i][j])
+					{
+						h[i][j]=a;
+						if(h[i][j]==1)break;
+					}
+				}
+				printf("%d ",h[i][j]);
+			}
+			printf("\n");
 		}
 	}
 	return 0;
