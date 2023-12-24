@@ -1,6 +1,7 @@
 #include<stdio.h>
+#include<string.h>
 
-char ipt0[1000005];
+char ipt[100];
 
 char word[20];
 
@@ -9,30 +10,26 @@ int cmp(char a,char b){
 }
 
 int main(){
-    ipt0[0]=' ';
-    char *ptr,*ipt=&ipt0[1];
-    int i,j,count,first,sum,len1,len2;
+    int i,count,first,sum,len1,len2;
     while (~scanf("%s",&word)){
-        for (len1=0;word[len1]!='\0';len1++);
-        count=first=-1,sum=0;
+        printf("%s\n",word);
+        len1=strlen(word);
+        count=0,first=-1,sum=0;
         getchar();
-        gets(ipt);
-        if (ipt0[1]=='\0') goto end;
-        for (i=0;ipt0[i]!='\0';i++){
-            if (ipt0[i]==' '){
-                i++;count++;
-                for (len2=0;ipt0[i+len2]!='\0'&&ipt0[i+len2]!=' ';len2++);
-                if (len1!=len2) goto next;
-                for (j=0;j<len1;j++){
-                    if (!cmp(word[j],ipt0[i+j])) goto next;
-                }
-                if (first==-1) first=count;
-                sum++;
-            }
-            next:;
-        }
-        if (~first) printf("%d %d\n",sum,first);
-        else end:printf("-1\n");
+        next:scanf("%s",&ipt);
+        printf("%s ",ipt);
+        len2=strlen(ipt);
+        if (len1!=len2) goto end;
+        for (i=0;i<len1;i++) if (!cmp(word[i],ipt[i])) goto end;
+        sum++;
+        if (first==-1) first=count;
+        end:
+        count+=len2+1;
+        if (getchar()==' ') goto next;
+
+        if (sum) printf("%d %d\n",sum,first);
+        else printf("-1\n");
+
     }
     return 0;
 }

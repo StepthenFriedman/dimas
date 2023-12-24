@@ -1,33 +1,23 @@
-#include<stdio.h>
-
-char ipt[100];
-
-char word[20];
-
-int cmp(char a,char b){
-    return (a==b)||((a+'A'-'a')==b)||((a+'a'-'A')==b);
-}
-
-int main(){
-    char *ptr;
-    int i,j,count,first,sum,len1,len2;
-    while (~scanf("%s",&word)){
-        for (len1=0;word[len1]!='\0';len1++);
-        count=0,first=-1,sum=0;
-        getchar();
-        next:scanf("%s",&ipt);
-
-        for (len2=0;ipt[len2]!='\0';len2++);
-        if (len1!=len2) goto end;
-        for (i=0;i<len1;i++) if (!cmp(word[i],ipt[i])) goto end;
-        sum++;
-        if (first==-1) first=count;
-        end:
-        count+=len2+1;
-        if (getchar()==' ') goto next;
-
-        if (~first) printf("%d %d\n",sum,first);
-        else printf("-1\n");
+#include <stdio.h>
+#include <string.h>
+int main() {
+    char a[11], b[10000001];
+    while (gets(a)&&gets(b)) {
+        strcat(a, " ");
+        strcat(b, " ");
+        int i, s, n = 0, l, j, ss = 0, k, rec;
+        for (i=0; a[i]!='\0';i++) if (a[i]>='a') a[i]-='a'-'A';
+        for (i=0; b[i]!='\0';i++) if (b[i]>='a') b[i]-='a'-'A';
+        for (i=0; b[i]!='\0';i++) if (b[i]==' ') {
+            s=1;
+            for (j=n, k=0; j<=i, a[k]!='\0';j++,k++) s *= (b[j] == a[k]);
+            ss+=(s==1); 
+            if (ss == 1&&s == 1) rec = n;  
+            n = i;
+            n++;
+        }
+        if (!ss) printf("-1\n");
+        else if (ss >= 1) printf("%d %d\n", ss, rec);
     }
     return 0;
 }
