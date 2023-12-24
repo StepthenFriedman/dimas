@@ -14,8 +14,8 @@ int main(){
                 s[i]/=2;next=1;
             }
             if (s[digits-1]) next=1;
-            res[j]=s[digits-1]%2;
-            s[digits-1]/=2;j++;
+            res[j++]=s[digits-1]%2;
+            s[digits-1]/=2;
         }
         j--;
         while (!res[j]) j--;
