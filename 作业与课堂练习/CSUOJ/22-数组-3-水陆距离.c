@@ -7,7 +7,7 @@ int main(){
     int n,m,i,j,k,wl,t;
     while (~scanf("%d%d",&n,&m)){
         if (!(n+m)) break;
-        memset(res,0b11111111,1000*1000*4);
+        memset(res,0b[0]1111111,1000*1000*4);
         for (i=0;i<n;i++) {
             for (j=0;j<m;j++) printf("%u ",res[i][j]);
             putchar('\n');

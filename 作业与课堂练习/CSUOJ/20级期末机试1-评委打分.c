@@ -1,4 +1,4 @@
-#include<stdio.h>
+#include <stdio.h>
 int cmp(const void *a,const void *b){
 	return *(float*)a-*(float*)b;
 }
