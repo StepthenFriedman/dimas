@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-void move(void *dest, void *src,unsigned long size){
+void copy(void *dest, void *src,unsigned long size){
     char *d=dest,*s=src;
     while (size--) *d++ = *s++;
 }
@@ -9,12 +9,12 @@ void merge(void *start,void *mid,void *end,unsigned long size,int (*cmp)(const v
     void *temp=malloc(end-start+size);
     void *i=start,*j=mid+size,*copy=temp,*fre=temp,*disp;
     while (i<=mid&&j<=end){
-        if (cmp(i,j)<0) move(temp,i,size),temp+=size,i+=size;
-        else            move(temp,j,size),temp+=size,j+=size;
+        if (cmp(i,j)<0) copy(temp,i,size),temp+=size,i+=size;
+        else            copy(temp,j,size),temp+=size,j+=size;
     }
-    while (i<=mid) move(temp,i,size),temp+=size,i+=size;
-    while (j<=end) move(temp,j,size),temp+=size,j+=size;
-    for (i=start;i<=end;i+=size,copy+=size) move(i,copy,size);
+    while (i<=mid) copy(temp,i,size),temp+=size,i+=size;
+    while (j<=end) copy(temp,j,size),temp+=size,j+=size;
+    for (i=start;i<=end;i+=size,copy+=size) copy(i,copy,size);
     free(fre);
 }
 void mergesort(void *start,void *end,unsigned long size,int (*cmp)(const void *,const void *)){
