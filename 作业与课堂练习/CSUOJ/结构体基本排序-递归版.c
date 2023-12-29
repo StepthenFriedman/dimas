@@ -29,7 +29,7 @@ int main(){
             list[i++]=temp;
         }
         qsort(list,n,sizeof(stu),cmp1);
-        for (i=0;i<n;i++) printf("%3d %20s %3d %3d %3d %3d\n",i+1,list[i].name,list[i].sum,list[i].c,list[i].math,list[i].ele);
+        for (i=0;i<n;i++) printf("%3d %20s %3d %3d %3d %3d\n",i+1,list[i].name,list[i].sum,list[i].c,list[i].math,list[i].ele),free(list[i].name);
 	}
 	return 0;
 }
