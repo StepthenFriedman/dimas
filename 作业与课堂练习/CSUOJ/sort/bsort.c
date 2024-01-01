@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#define DULPLICATE 2
 void quicksort(void *start,void *end,unsigned long size,int (*cmp)(const void *,const void *));
 void copy(void *dest, void *src,unsigned long size){
     char *d=dest,*s=src;
@@ -32,7 +33,7 @@ void bucketsort(void *start,void *end,unsigned long size,unsigned int bucketlen,
     char* count=calloc(len,sizeof(char));
     for (void *i=start;i<=end;i+=size){
         if (!count[cast(i)/bucketlen]){
-            void* inner=malloc(bucketlen*2*size);
+            void* inner=malloc(bucketlen*DULPLICATE*size);
             copy(inner,i,size);
             count[cast(i)/bucketlen]++;
             temp[cast(i)/bucketlen]=inner;
@@ -60,7 +61,7 @@ void quicksort(void *start,void *end,unsigned long size,int (*cmp)(const void *,
 }
 
 int main(){
-    unsigned int a[10]={2,3,5,1,7,8,11,2,4,6},i;
-    bsort(a,10,sizeof(int),7,cast);
-    for (i=0;i<10;i++) printf("%d ",a[i]);
+    unsigned int a[]={2,3,5,1,7,8,11,2,4,13,20,32,53,60,100,1100,23,10032,4,59,280,6},i;
+    bsort(a,sizeof(a)/sizeof(int),sizeof(int),10,cast);
+    for (i=0;i<sizeof(a)/sizeof(int);i++) printf("%d ",a[i]);
 }
