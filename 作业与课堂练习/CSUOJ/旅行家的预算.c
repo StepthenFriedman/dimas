@@ -45,45 +45,27 @@ int main(){
     double DCity,Capa,DOil,DCar,total,oil,tempOil;
     stn list[100000];
     int N,i,j;
-    while ((total=oil=list[0].distance=0),~scanf("%lf%lf%lf%lf%d",&DCity,&Capa,&DOil,&(list[0].oilPrice),&N)){
+    while ((total=tempOil=oil=list[0].distance=0),~scanf("%lf%lf%lf%lf%d",&DCity,&Capa,&DOil,&(list[0].oilPrice),&N)){
         DCar=DOil*Capa;
         for (i=1;i<=N;i++) scanf("%lf%lf",&(list[i].distance),&(list[i].oilPrice));
         list[N+1].distance=DCity,list[N+1].oilPrice=0;
         qsort(list,N+2,sizeof(stn),cmp);
-        for (i=0;i<N;i++){
-            if (i) oil-=(list[i].distance-list[i-1].distance)/DOil;
+        for (i=0;i<=N;i++){
+            if (i>0) oil-=(list[i].distance-list[i-1].distance)/DOil;
             tempOil=(list[i+1].distance-list[i].distance)/DOil;
             if (Capa<tempOil) {
                 printf("No Solution\n");goto end;
             }
-            if (i<N&&oil<tempOil){
-                //should get gas!
-                if (list[i].oilPrice>list[i+1].oilPrice){
-                    //only get needed gas
-                    //printf("too high,get %lf oil,get %lf money,now has %lf total cost\n",tempOil-oil,list[i].oilPrice*(tempOil-oil),total);
+            if (oil<tempOil){
+                for (j=i+1;list[j].oilPrice>list[i].oilPrice;j++);
+                tempOil=min((list[j].distance-list[i].distance)/DOil,Capa);
+                if (tempOil>oil){
                     total+=list[i].oilPrice*(tempOil-oil);
                     oil=tempOil;
-                }else{
-                    for (j=i+1;list[j].oilPrice>list[i].oilPrice;j++);
-                    //printf("next station:(%lf %lf),",list[j].distance,list[j].oilPrice);
-                    //printf("need:%lf\n",((list[j].distance-list[i].distance)/DOil));
-                    tempOil=min((list[j].distance-list[i].distance)/DOil,Capa);
-                    if (tempOil>oil){
-                        //printf("cheap,get %lf oil,get %lf money,now has %lf total cost\n",tempOil-oil,list[i].oilPrice*(tempOil-oil),total);
-                        total+=list[i].oilPrice*(tempOil-oil);
-                        oil=tempOil;
-                    }
                 }
             }
         }
-        oil-=(list[N].distance-list[N-1].distance)/DOil;
-        tempOil=(DCity-list[N].distance)/DOil;
-        if (Capa<tempOil) {
-            printf("No Solution\n");goto end;
-        }
-        if (oil<tempOil) total+=list[N].oilPrice*(tempOil-oil);
         printf("%.2lf\n",total);
         end:;
     }
-    
 }
