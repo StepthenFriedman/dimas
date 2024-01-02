@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #define E9 1000000000LL
 #define LEN 9
-
 unsigned long long* init(unsigned long long x,unsigned long digits){
     unsigned long long *res=(unsigned long long *)malloc(digits*sizeof(unsigned long long));
     res[digits-1]=x;

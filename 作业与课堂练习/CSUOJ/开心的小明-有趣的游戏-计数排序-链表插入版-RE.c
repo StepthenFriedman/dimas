@@ -1,23 +1,24 @@
+//contest id:1620
+
 #include<stdio.h>
 #include <stdlib.h>
+#include<limits.h>
 
 typedef struct ListNode{
 	int value;
+	//int dulplicate;
 	struct ListNode* next;
 } LN;
 
 int main(){
-	int n,sum=0,add,times,max,min,ipt,i;
+	int n,sum=0,add,times,ipt,i;
 	LN* next;
 	scanf("%d",&n);
-	int* sort=calloc(1001,sizeof(int));
-	scanf("%d",&ipt);max=min=ipt;sort[ipt]++;
-	for(i=1;i<n;i++){
+	int* sort=calloc(1002,sizeof(int));
+	for(i=0;i<n;i++){
 		scanf("%d",&ipt);
-		max=max>ipt?max:ipt;
-		min=min<ipt?min:ipt;
 		sort[ipt]++;
-	}
+	}/*
 	LN* node=(LN*)malloc(sizeof(LN)),*head=node,*search=node,*del=node,*tmp;
 	node->value=min;sort[min]--;
     for (i=min;i<=max;i++){
@@ -43,9 +44,7 @@ int main(){
 		(a->next)=(search->next);
 		(search->next)=a;
 	}
-	while (del!=NULL){
-		tmp=del;del=del->next;free(tmp);
-	}
-	printf("%d\n",sum);
+	printf("%d\n",sum);*/
+	printf("ok!\n");
 	return 0;
 }
