@@ -11,7 +11,7 @@ typedef struct ListNode{
 } LN;
 
 int main(){
-	int n,sum=0,add,times,ipt,i;
+	int n,sum=0,add,times,max=LONG_MAX-1,min=0,ipt,i;
 	LN* next;
 	scanf("%d",&n);
 	int* sort=calloc(1002,sizeof(int));
