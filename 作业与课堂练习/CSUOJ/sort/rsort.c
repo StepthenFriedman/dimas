@@ -3,59 +3,170 @@
 #include <string.h>
 #pragma GCC optimize ("O3")
 
-void rsort(unsigned *a, int len){
-    unsigned *b = (unsigned *)malloc(sizeof(unsigned)*len);
-    int sum[256]={0}, sum1[256]={0}, sum2[256]={0}, sum3[256]={0},q,i;
+void rsort_num_64bits(unsigned long long *a, int len){
+    unsigned long long *b = (unsigned long long *)malloc(sizeof(unsigned long long)*len), sum[4][65536]={0};
+    int i;
     for (i=0;i<len;i++){
-        ++sum[a[i] & 255];
-        ++sum1[(a[i] >> 8) & 255];
-        ++sum2[(a[i] >> 16) & 255];
-        ++sum3[a[i] >> 24];
+        sum[0][a[i] & 65535]++;
+        sum[1][(a[i] >> 16) & 65535]++;
+        sum[2][(a[i] >> 32) & 65535]++;
+        sum[3][a[i] >> 48]++;
     }
-    for (q = 1; q <= 255; ++q){
-        sum[q] += sum[q - 1];
-        sum1[q] += sum1[q - 1];
-        sum2[q] += sum2[q - 1];
-        sum3[q] += sum3[q - 1];
+    for (i=1;i<=65535;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
     }
-    for (q = len - 1; q >= 0; --q) b[--sum[a[q] & 255]] = a[q];
-    for (q = len - 1; q >= 0; --q) a[--sum1[(b[q] >> 8) & 255]] = b[q];
-    for (q = len - 1; q >= 0; --q) b[--sum2[(a[q] >> 16) & 255]] = a[q];
-    for (q = len - 1; q >= 0; --q) a[--sum3[b[q] >> 24]] = b[q];
+    for (i=len-1;i>-1;i--) b[--sum[0][a[i] & 65535]] = a[i];
+    for (i=len-1;i>-1;i--) a[--sum[1][(b[i]>>16) & 65535]] = b[i];
+    for (i=len-1;i>-1;i--) b[--sum[2][(a[i]>>32) & 65535]] = a[i];
+    for (i=len-1;i>-1;i--) a[--sum[3][b[i]>>48]] = b[i];
     free(b);
 }
 
-void rsort_float(float *ar, int len){
-    unsigned  *a=(unsigned *)ar;
-    unsigned *BUF = (unsigned *)malloc(sizeof(unsigned)*(len+1)),*b=BUF+1;
-    *(float *)BUF=1.0;//guard
-    int sum[256]={0}, sum1[256]={0}, sum2[256]={0}, sum3[256]={0},q;
-    for (int i = 0; i < len; i++){
-        ++sum[a[i] & 255];
-        ++sum1[(a[i] >> 8) & 255];
-        ++sum2[(a[i] >> 16) & 255];
-        ++sum3[a[i] >> 24];
+void rsort_num_32bits(unsigned long *a, int len){
+    unsigned long *b = (unsigned long *)malloc(sizeof(unsigned long)*len), sum[4][256]={0};
+    int i;
+    for (i=0;i<len;i++){
+        sum[0][a[i] & 255]++;
+        sum[1][(a[i] >> 8) & 255]++;
+        sum[2][(a[i] >> 16) & 255]++;
+        sum[3][a[i] >> 24]++;
     }
-    for (q = 1; q <= 255; ++q){
-        sum[q] += sum[q - 1];
-        sum1[q] += sum1[q - 1];
-        sum2[q] += sum2[q - 1];
-        sum3[q] += sum3[q - 1];
+    for (i=1;i<256;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
     }
-    for (q = len - 1; q >= 0; --q) b[--sum[a[q] & 255]] = a[q];
-    for (q = len - 1; q >= 0; --q) a[--sum1[(b[q] >> 8) & 255]] = b[q];
-    for (q = len - 1; q >= 0; --q) b[--sum2[(a[q] >> 16) & 255]] = a[q];
-    for (q = len - 1; q >= 0; --q) a[--sum3[b[q] >> 24]] = b[q];
-    memcpy(b,a,sizeof(unsigned)*len);
-    int beg=len-1;q = beg;
-    for (;b[q]&0x80000000; --q)
-        a[beg-q]=b[q];
-    memcpy(a+beg-q,b,sizeof(unsigned)*(q+1));
-    free(BUF);
+    for (i=len-1;i>-1;i--) b[--sum[0][a[i] & 255]] = a[i];
+    for (i=len-1;i>-1;i--) a[--sum[1][(b[i]>>8) & 255]] = b[i];
+    for (i=len-1;i>-1;i--) b[--sum[2][(a[i]>>16) & 255]] = a[i];
+    for (i=len-1;i>-1;i--) a[--sum[3][b[i]>>24]] = b[i];
+    free(b);
+}
+
+void copy(void *dest, void *src,unsigned long size){
+    char *d=dest,*s=src;
+    while (size--) *d++ = *s++;
+}
+typedef struct test{
+    int a,b,c;
+}test;
+unsigned long long cast(const void *a){
+    return (unsigned long long)*(int*)a;
+}
+
+unsigned long cast_test(const void *ipt){
+    unsigned long res=((test*)ipt)->a+((test*)ipt)->b+((test*)ipt)->c;
+    return res;
+}
+
+void rsort_64bits(void *start,unsigned long total_elem,unsigned long size,unsigned long long (*cast)(const void *)){
+    void *b = (void*)malloc(size*total_elem);unsigned long sum[4][65536]={0};
+    unsigned long long temp;
+    int i;void *ptr=start,*end=start+(total_elem-1)*size,
+               *startb=b,*endb=startb+(total_elem-1)*size;
+
+    for (;ptr<=end;ptr+=size){
+        temp=cast(ptr);
+        sum[0][temp & 65535]++;
+        sum[1][(temp >> 16) & 65535]++;
+        sum[2][(temp >> 32) & 65535]++;
+        sum[3][temp >> 48]++;
+    }
+    for (i=1;i<=65535;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
+    }
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[0][cast(ptr) & 65535])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[1][(cast(ptr)>>16) & 65535])*size,ptr,size);
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[2][(cast(ptr)>>32) & 65535])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[3][(cast(ptr)>>48) & 65535])*size,ptr,size);
+    free(b);
+}
+
+void rsort_4priorities_16bits(void *start,unsigned long total_elem,unsigned long size,unsigned short(*cast1)(const void *),unsigned short(*cast2)(const void *),unsigned short(*cast3)(const void *),unsigned short(*cast4)(const void *)){
+    void *b = (void*)malloc(size*total_elem);unsigned long sum[4][65536]={0};
+    int i;void *ptr=start,*end=start+(total_elem-1)*size,
+               *startb=b,*endb=startb+(total_elem-1)*size;
+
+    for (;ptr<=end;ptr+=size){
+        sum[0][cast4(ptr)]++;
+        sum[1][cast3(ptr)]++;
+        sum[2][cast2(ptr)]++;
+        sum[3][cast1(ptr)]++;
+    }
+    for (i=1;i<=65535;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
+    }
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[0][cast4(ptr)])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[1][cast3(ptr)])*size,ptr,size);
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[2][cast2(ptr)])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[3][cast1(ptr)])*size,ptr,size);
+    free(b);
+}
+
+void rsort_32bits(void *start,unsigned long total_elem,unsigned long size,unsigned long (*cast)(const void *)){
+    void *b = (void*)malloc(size*total_elem);unsigned long sum[4][256]={0},temp;
+    int i;void *ptr=start,*end=start+(total_elem-1)*size,
+               *startb=b,*endb=startb+(total_elem-1)*size;
+
+    for (;ptr<=end;ptr+=size){
+        temp=cast(ptr);
+        sum[0][temp & 255]++;
+        sum[1][(temp >> 8) & 255]++;
+        sum[2][(temp >> 16) & 255]++;
+        sum[3][temp >> 24]++;
+    }
+    for (i=1;i<=255;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
+    }
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[0][cast(ptr) & 255])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[1][(cast(ptr)>>8) & 255])*size,ptr,size);
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[2][(cast(ptr)>>16) & 255])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[3][(cast(ptr)>>24) & 255])*size,ptr,size);
+    free(b);
+}
+
+void rsort_4priorities_8bits(void *start,unsigned long total_elem,unsigned long size,unsigned char(*cast1)(const void *),unsigned char(*cast2)(const void *),unsigned char(*cast3)(const void *),unsigned char(*cast4)(const void *)){
+    void *b = (void*)malloc(size*total_elem);unsigned long sum[4][256]={0};
+    int i;void *ptr=start,*end=start+(total_elem-1)*size,
+               *startb=b,*endb=startb+(total_elem-1)*size;
+
+    for (;ptr<=end;ptr+=size){
+        sum[0][cast4(ptr)]++;
+        sum[1][cast3(ptr)]++;
+        sum[2][cast2(ptr)]++;
+        sum[3][cast1(ptr)]++;
+    }
+    for (i=1;i<=255;i++){
+        sum[0][i]+=sum[0][i-1];
+        sum[1][i]+=sum[1][i-1];
+        sum[2][i]+=sum[2][i-1];
+        sum[3][i]+=sum[3][i-1];
+    }
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[0][cast4(ptr)])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[1][cast3(ptr)])*size,ptr,size);
+    for (ptr=end;ptr>=start;ptr-=size)   copy(startb+(--sum[2][cast2(ptr)])*size,ptr,size);
+    for (ptr=endb;ptr>=startb;ptr-=size) copy(start+ (--sum[3][cast1(ptr)])*size,ptr,size);
+    free(b);
 }
 
 int main(){
-    unsigned int a[]={2,3,5,1,7,8,11,2,4,13,20,32,53,60,100,1100,23,1003200000,4,59,280,6},i;
-    rsort(a,sizeof(a)/sizeof(unsigned int));
-    for (i=0;i<sizeof(a)/sizeof(unsigned int);i++) printf("%d ",a[i]);
+    unsigned long long int a[]={2,3,5,1,7,8,11,102931902,18446744073709551600ULL,17436744084702051600ULL,1823718,2,4,13,103,20,32,53,60,1225,6},i,len=sizeof(a)/sizeof(unsigned long long);
+    rsort_64bits(a,len,sizeof(unsigned long long int),cast);
+    for (i=0;i<len;i++) printf("%llu ",a[i]);putchar('\n');
+    test list[]={{3,4,5},{1,7,8},{0,2,9},{5,11,3},{1000,-3,5},{100,-99,2}};unsigned long lentest=sizeof(list)/sizeof(test);
+    rsort_32bits(list,lentest,sizeof(test),cast_test);
+    for (i=0;i<lentest;i++) printf("(%d,%d,%d) ",list[i].a,list[i].b,list[i].c);putchar('\n');
 }

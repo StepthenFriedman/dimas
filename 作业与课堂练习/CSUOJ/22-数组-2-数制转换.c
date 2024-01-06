@@ -1,4 +1,3 @@
-#include <stdio.h>
 /*
 小南学了进制转换后，想编写一个正整数m的任意n进制转换为p进制正整数t的程序。其中m为不超过int类型的正整数，转换后的p进制正整数t不超过20位，n,p均为2-10之间的正整数。 
 程序的输入形式为：m<n>p，表示把n进制的整数m转换为p进制输出，输出形式为： m<n>=t<p>。
@@ -16,3 +15,29 @@
 48<10>=60<8>
 44<7>=40<8>
 */
+#include <stdio.h>
+
+unsigned long long to_digital(unsigned long long x,int radix){
+    if (radix==10) return x;
+    unsigned long long res=0,plus=1;
+    while (x) res+=plus*(x%10),plus*=radix,x/=10;
+    return res;
+}
+unsigned long long digital_to(unsigned long long x,int radix){
+    if (radix==10) return x;
+    unsigned long long res=0,plus=1;
+    while (x) res+=plus*(x%radix),plus*=10,x/=radix;
+    return res;
+}
+unsigned long long convert(unsigned long long x,int radix1,int radix2){
+    unsigned long long res=0,plus=1;
+    while (x) res+=plus*(x%radix2),plus*=radix1,x/=radix2;
+    return res;
+}
+
+int main(){
+    unsigned long long m;int n,p;unsigned long long dbg;
+    while (~scanf("%llu<%d>%d",&m,&n,&p)) {
+        printf("%llu<%d>=%llu<%d>\n",m,n,convert(m,n,p),p);
+    }
+}
