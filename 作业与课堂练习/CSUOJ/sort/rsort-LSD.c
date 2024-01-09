@@ -3,7 +3,7 @@
 #include <string.h>
 #pragma GCC optimize ("O3")
 
-void rsort_num_64bits(unsigned long long *a, int len){
+void rsort_num_longlong(unsigned long long *a, int len){
     unsigned long long *b = (unsigned long long *)malloc(sizeof(unsigned long long)*len), sum[4][65536]={0};
     int i;
     for (i=0;i<len;i++){
@@ -25,7 +25,7 @@ void rsort_num_64bits(unsigned long long *a, int len){
     free(b);
 }
 
-void rsort_num_32bits(unsigned long *a, int len){
+void rsort_num_long(unsigned long *a, int len){
     unsigned long *b = (unsigned long *)malloc(sizeof(unsigned long)*len), sum[4][256]={0};
     int i;
     for (i=0;i<len;i++){
@@ -63,7 +63,7 @@ unsigned long cast_test(const void *ipt){
     return res;
 }
 
-void rsort_64bits(void *start,unsigned long total_elem,unsigned long size,unsigned long long (*cast)(const void *)){
+void rsort_longlong(void *start,unsigned long total_elem,unsigned long size,unsigned long long (*cast)(const void *)){
     void *b = (void*)malloc(size*total_elem);unsigned long sum[4][65536]={0};
     unsigned long long temp;
     int i;void *ptr=start,*end=start+(total_elem-1)*size,
@@ -89,7 +89,7 @@ void rsort_64bits(void *start,unsigned long total_elem,unsigned long size,unsign
     free(b);
 }
 
-void rsort_4priorities_16bits(void *start,unsigned long total_elem,unsigned long size,unsigned short(*cast1)(const void *),unsigned short(*cast2)(const void *),unsigned short(*cast3)(const void *),unsigned short(*cast4)(const void *)){
+void rsort_4priorities_short(void *start,unsigned long total_elem,unsigned long size,unsigned short(*cast1)(const void *),unsigned short(*cast2)(const void *),unsigned short(*cast3)(const void *),unsigned short(*cast4)(const void *)){
     void *b = (void*)malloc(size*total_elem);unsigned long sum[4][65536]={0};
     int i;void *ptr=start,*end=start+(total_elem-1)*size,
                *startb=b,*endb=startb+(total_elem-1)*size;
@@ -113,7 +113,7 @@ void rsort_4priorities_16bits(void *start,unsigned long total_elem,unsigned long
     free(b);
 }
 
-void rsort_32bits(void *start,unsigned long total_elem,unsigned long size,unsigned long (*cast)(const void *)){
+void rsort_long(void *start,unsigned long total_elem,unsigned long size,unsigned long (*cast)(const void *)){
     void *b = (void*)malloc(size*total_elem);unsigned long sum[4][256]={0},temp;
     int i;void *ptr=start,*end=start+(total_elem-1)*size,
                *startb=b,*endb=startb+(total_elem-1)*size;
@@ -138,7 +138,7 @@ void rsort_32bits(void *start,unsigned long total_elem,unsigned long size,unsign
     free(b);
 }
 
-void rsort_4priorities_8bits(void *start,unsigned long total_elem,unsigned long size,unsigned char(*cast1)(const void *),unsigned char(*cast2)(const void *),unsigned char(*cast3)(const void *),unsigned char(*cast4)(const void *)){
+void rsort_4priorities_char(void *start,unsigned long total_elem,unsigned long size,unsigned char(*cast1)(const void *),unsigned char(*cast2)(const void *),unsigned char(*cast3)(const void *),unsigned char(*cast4)(const void *)){
     void *b = (void*)malloc(size*total_elem);unsigned long sum[4][256]={0};
     int i;void *ptr=start,*end=start+(total_elem-1)*size,
                *startb=b,*endb=startb+(total_elem-1)*size;
@@ -164,9 +164,9 @@ void rsort_4priorities_8bits(void *start,unsigned long total_elem,unsigned long 
 
 int main(){
     unsigned long long int a[]={2,3,5,1,7,8,11,102931902,18446744073709551600ULL,17436744084702051600ULL,1823718,2,4,13,103,20,32,53,60,1225,6},i,len=sizeof(a)/sizeof(unsigned long long);
-    rsort_64bits(a,len,sizeof(unsigned long long int),cast);
+    rsort_longlong(a,len,sizeof(unsigned long long int),cast);
     for (i=0;i<len;i++) printf("%llu ",a[i]);putchar('\n');
     test list[]={{3,4,5},{1,7,8},{0,2,9},{5,11,3},{1000,-3,5},{100,-99,2}};unsigned long lentest=sizeof(list)/sizeof(test);
-    rsort_32bits(list,lentest,sizeof(test),cast_test);
+    rsort_long(list,lentest,sizeof(test),cast_test);
     for (i=0;i<lentest;i++) printf("(%d,%d,%d) ",list[i].a,list[i].b,list[i].c);putchar('\n');
 }
