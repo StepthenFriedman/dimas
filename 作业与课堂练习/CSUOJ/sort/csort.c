@@ -9,7 +9,7 @@ unsigned char cast(const void *a){
 }
 
 void countingsort_rmDulplicate_long(unsigned long *arr,unsigned long *len){
-    unsigned long long* exist=calloc(67108864,sizeof(unsigned long long)),j2;
+    unsigned long long* exist=calloc(67108864,sizeof(unsigned long long));
     int i,j,k=0,max=0;
     for (i=0;i<*len;i++){
         exist[arr[i]/64]|=1ULL<<(arr[i]%64);

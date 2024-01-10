@@ -20,7 +20,7 @@ int check_find_certain(const void *x){
 }
 
 int main(){
-    //find the maximum aviliable value
+    //find the maximum aviliable 
     char a[]={1,2,3,4,5,6,7,0,0,0,0};
     printf("%d\n",*((char*)max_aviliable(a,11,sizeof(char),check)));
 
